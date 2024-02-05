@@ -61,6 +61,24 @@ def fetch_data(selected_ticker, timeframe, start_date, end_date):
 
     return df
 
+# Function to fetch news articles based on a given ticker symbol
+@st.cache_data(ttl=3600)  # Cache data for 1 hour
+def fetch_news(ticker):
+    try:
+        news_url = "https://api.polygon.io/v2/reference/news"
+        params = {
+            "ticker": ticker,
+            "apiKey": POLYGON_API_KEY,
+            "limit": 10  # You can adjust the limit as per your preference
+        }
+        response = requests.get(news_url, params=params)
+        response.raise_for_status()  # Raise an exception for bad status codes
+        news_data = response.json()["results"]
+        return news_data
+    except Exception as e:
+        st.sidebar.error(f"Error fetching news: {str(e)}")
+        return []
+
 # Function to calculate Simple Moving Average (SMA)
 def calculate_sma(data, window):
     return data.rolling(window=window).mean()
@@ -122,6 +140,9 @@ def main():
     window_rsi = st.sidebar.slider("Select RSI Window", min_value=2, max_value=14, value=2)
     df['rsi'] = calculate_rsi(df['close'], window_rsi)
 
+    # Fetch news articles based on the selected ticker
+    news_data = fetch_news(selected_ticker)
+
     # Plot candlestick chart with SMA and EMA
     candlestick = go.Candlestick(
         x=df['timestamp'],
@@ -177,6 +198,16 @@ def main():
 
     # Display the plot
     st.plotly_chart(fig)
+
+    # Display news articles
+    st.title("News Articles")
+    for news_article in news_data:
+        st.subheader(news_article["title"])
+        st.write(f"Author: {news_article['author']}")
+        st.write(f"Article URL: [{news_article['title']}]({news_article['article_url']})")
+        # st.write(f"Description: {news_article['description']}")
+        st.image(news_article["image_url"])
+        st.markdown("---")  # Add a horizontal line between articles
 
 
 if __name__ == "__main__":
