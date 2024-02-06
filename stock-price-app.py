@@ -6,6 +6,12 @@ import requests
 import pandas as pd
 from plotly.subplots import make_subplots
 
+
+# Set background color for the entire app
+with open('style.css') as f:
+    st.markdown(f'<style>{f.read()}</style>', unsafe_allow_html=True)
+
+
 # Initialize the RESTClient with your API key
 POLYGON_API_KEY = "dh5skqccO4AKJ4X7aHnpxjeW1VJS9_eS"
 client = RESTClient(api_key=POLYGON_API_KEY)
