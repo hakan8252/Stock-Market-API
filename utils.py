@@ -18,7 +18,7 @@ def fetch_tickers():
         ticker_url = "https://api.polygon.io/v3/reference/tickers"
         params = {
             "active": "true",
-            "apiKey": api_key,
+            "apiKey": client,
             "limit": 1000,
             "market": "stocks"
         }
@@ -70,7 +70,7 @@ def fetch_news(ticker):
         news_url = "https://api.polygon.io/v2/reference/news"
         params = {
             "ticker": ticker,
-            "apiKey": api_key,
+            "apiKey": client,
             "limit": 10  # You can adjust the limit as per your preference
         }
         response = requests.get(news_url, params=params)
