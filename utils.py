@@ -3,10 +3,10 @@ from polygon import RESTClient
 import pandas as pd
 from datetime import datetime
 import streamlit as st
+import os
 
-
-# Initialize the RESTClient with your API key
-POLYGON_API_KEY = "dh5skqccO4AKJ4X7aHnpxjeW1VJS9_eS"
+# Get the API key from the environment variable
+POLYGON_API_KEY = os.getenv("POLYGON_API_KEY")
 client = RESTClient(api_key=POLYGON_API_KEY)
 
 

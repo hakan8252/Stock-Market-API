@@ -4,9 +4,6 @@ from datetime import datetime, timedelta
 from plotly.subplots import make_subplots
 import pandas as pd
 from utils import fetch_tickers, fetch_data, fetch_news, calculate_sma, calculate_ema, calculate_rsi
-import requests
-
-
 
 # Set background color for the entire app
 with open('style.css') as f:
