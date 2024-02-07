@@ -3,7 +3,6 @@ from polygon import RESTClient
 import pandas as pd
 from datetime import datetime
 import streamlit as st
-import os
 
 # # Get the API key from the environment variable
 # POLYGON_API_KEY = os.getenv("POLYGON_API_KEY")
