@@ -2,7 +2,6 @@ import streamlit as st
 import plotly.graph_objs as go
 from datetime import datetime, timedelta
 from plotly.subplots import make_subplots
-import pandas as pd
 from utils import fetch_tickers, fetch_data, fetch_news, calculate_sma, calculate_ema, calculate_rsi
 
 # Set background color for the entire app

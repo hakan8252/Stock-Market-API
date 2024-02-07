@@ -3,10 +3,14 @@ from polygon import RESTClient
 import pandas as pd
 from datetime import datetime
 import streamlit as st
-import os
+import toml
 
-# Get the API key from the environment variable
-POLYGON_API_KEY = os.getenv("POLYGON_API_KEY")
+# Load secrets from secrets.toml file
+with open("secrets.toml", "r") as f:
+    secrets = toml.load(f)
+
+# Access the Polygon API key
+POLYGON_API_KEY = secrets["secrets"]["POLYGON_API_KEY"]
 client = RESTClient(api_key=POLYGON_API_KEY)
 
 
