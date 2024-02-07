@@ -2,10 +2,12 @@
 This Streamlit web application allows users to visualize and analyze stock market data using candlestick charts, moving averages, relative strength index (RSI), and fetch recent news articles related to a selected stock ticker symbol.
 
 # Features
-### Candlestick Chart Visualization: Visualize stock market data using candlestick charts, showing open, high, low, and close prices over a specified time frame.
-### Moving Averages (SMA and EMA): Calculate and display simple moving averages (SMA) and exponential moving averages (EMA) to identify trends in the stock data.
-### Relative Strength Index (RSI): Calculate and plot the relative strength index (RSI) to determine if a stock is overbought or oversold.
-### Fetch News Articles: Fetch recent news articles related to the selected stock ticker symbol to provide users with relevant information about the company.
+
+* Candlestick Chart Visualization: Visualize stock market data using candlestick charts, showing open, high, low, and close prices over a specified time frame.
+* Moving Averages (SMA and EMA): Calculate and display simple moving averages (SMA) and exponential moving averages (EMA) to identify trends in the stock data.
+* Relative Strength Index (RSI): Calculate and plot the relative strength index (RSI) to determine if a stock is overbought or oversold.
+* Fetch News Articles: Fetch recent news articles related to the selected stock ticker symbol to provide users with relevant information about the company.
+
 ## Getting Started
 ### Prerequisites
 Before running the application, make sure you have the following installed:
