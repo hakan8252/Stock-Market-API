@@ -12,10 +12,10 @@ This Streamlit web application allows users to visualize and analyze stock marke
 ### Prerequisites
 Before running the application, make sure you have the following installed:
 
-<br/> Python 3.x
-<br/> Streamlit
-<br/> Plotly
-<br/> Polygon API key (sign up [here](https://polygon.io/) to get your API key)
+*  Python 3.x
+*  Streamlit
+*  Plotly
+*  Polygon API key (sign up [here](https://polygon.io/) to get your API key)
 
 # Installation
 Clone the repository:
