@@ -1,0 +1,6 @@
+streamlit
+plotly
+datetime
+polygon
+requests
+pandas
