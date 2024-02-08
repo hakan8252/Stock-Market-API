@@ -22,7 +22,7 @@ def main():
 
     # Create sidebar for inputs
     st.sidebar.header("Input Parameters")
-    ticker_input = st.sidebar.text_input("Enter a ticker", "", placeholder = "Example ticker APPL")
+    ticker_input = st.sidebar.text_input("Enter a ticker", "", placeholder = "Example ticker AAPL")
     selected_ticker = st.sidebar.selectbox("Or select a ticker", tickers)
 
     # Allow user to enter a ticker manually
