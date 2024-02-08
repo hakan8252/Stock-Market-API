@@ -10,7 +10,6 @@ import streamlit as st
 api_key=st.secrets.secrets.POLYGON_API_KEY
 client = RESTClient(api_key=api_key)
 
-
 # Function to fetch tickers from Polygon.io
 @st.cache_data(ttl=3600)  # Cache data for 1 hour
 def fetch_tickers():
