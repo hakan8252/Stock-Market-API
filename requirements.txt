@@ -1,6 +1,5 @@
 streamlit==1.31.0
-plotly
-datetime
+plotly==5.13.1
 polygon==1.2.0
 requests==2.31.0
-pandas
+pandas==2.1.1
