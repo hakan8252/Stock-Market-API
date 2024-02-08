@@ -1,5 +1,4 @@
 import requests
-from polygon import RESTClient
 import pandas as pd
 from datetime import datetime
 import streamlit as st
@@ -7,8 +6,7 @@ import streamlit as st
 # # Get the API key from the environment variable
 # POLYGON_API_KEY = os.getenv("POLYGON_API_KEY")
 
-api_key=st.secrets.secrets.POLYGON_API_KEY
-client = RESTClient(api_key=api_key)
+POLYGON_API_KEY=st.secrets.secrets.POLYGON_API_KEY
 
 # Function to fetch tickers from Polygon.io
 @st.cache_data(ttl=3600)  # Cache data for 1 hour
@@ -17,7 +15,7 @@ def fetch_tickers():
         ticker_url = "https://api.polygon.io/v3/reference/tickers"
         params = {
             "active": "true",
-            "apiKey": api_key,
+            "apiKey": POLYGON_API_KEY,
             "limit": 1000,
             "market": "stocks"
         }
@@ -34,32 +32,34 @@ def fetch_tickers():
 # Function to fetch data from Polygon.io
 @st.cache_data(ttl=3600)  # Cache data for 1 hour
 def fetch_data(selected_ticker, timeframe, start_date, end_date):
-    data = client.get_aggs(selected_ticker, 1, timeframe, start_date.strftime("%Y-%m-%d"), end_date.strftime("%Y-%m-%d"))
+    try:
+        url = f"https://api.polygon.io/v2/aggs/ticker/{selected_ticker}/range/1/{timeframe}/{start_date}/{end_date}?adjusted=true&sort=asc&limit=120&apiKey={POLYGON_API_KEY}"
+        response = requests.get(url)
+        response.raise_for_status()  # Raise an exception for bad status codes
+        data = response.json()["results"]
 
-    # Extract relevant data from the list of 'Agg' objects
-    opens = [agg.open for agg in data]
-    highs = [agg.high for agg in data]
-    lows = [agg.low for agg in data]
-    closes = [agg.close for agg in data]
-    volumes = [agg.volume for agg in data]
-    transactions = [agg.transactions for agg in data]
-    timestamps = [agg.timestamp for agg in data]
+        # Extract relevant data
+        opens = [item['o'] for item in data]
+        highs = [item['h'] for item in data]
+        lows = [item['l'] for item in data]
+        closes = [item['c'] for item in data]
+        volumes = [item['v'] for item in data]
+        timestamps = [datetime.fromtimestamp(item['t'] / 1000) for item in data]
 
-    # Convert timestamps to datetime objects
-    timestamps = [datetime.utcfromtimestamp(ts / 1000) for ts in timestamps]
+        # Convert data to Pandas DataFrame
+        df = pd.DataFrame({
+            'timestamp': timestamps,
+            'open': opens,
+            'high': highs,
+            'low': lows,
+            'close': closes,
+            'volume': volumes,
+        })
 
-    # Convert data to Pandas DataFrame
-    df = pd.DataFrame({
-        'timestamp': timestamps,
-        'open': opens,
-        'high': highs,
-        'low': lows,
-        'close': closes,
-        'volume': volumes,
-        'transactions': transactions
-    })
-
-    return df
+        return df
+    except Exception as e:
+        st.error(f"Error fetching data: {str(e)}")
+        return pd.DataFrame()
 
 
 # Function to fetch news articles based on a given ticker symbol
@@ -69,7 +69,7 @@ def fetch_news(ticker):
         news_url = "https://api.polygon.io/v2/reference/news"
         params = {
             "ticker": ticker,
-            "apiKey": api_key,
+            "apiKey": POLYGON_API_KEY,
             "limit": 10  # You can adjust the limit as per your preference
         }
         response = requests.get(news_url, params=params)
