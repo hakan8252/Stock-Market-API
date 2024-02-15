@@ -40,6 +40,8 @@ streamlit run streamlit_app.py
 
 Access the app in your web browser at http://localhost:8501.
 
+Project Link: https://stock-market-api.streamlit.app/
+
 # Contributing
 Contributions are welcome! If you find any bugs or have suggestions for improvement, please open an issue or submit a pull request.
 
